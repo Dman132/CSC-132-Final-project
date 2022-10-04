@@ -3,8 +3,13 @@
 # Date: 10/3/2022
 # Description: 
 ###########################################################################################
-from tkinter import *
-
+try:
+    from tkinter import *
+    import tkFont
+except ImportError:
+    from tkinter import *
+    from tkinter import font as tkFont
+    
 # the room class
 # note that this class is fully implemented with dictionaries as illustrated in the lesson "More on Data Structures"
 class Room:
@@ -111,7 +116,46 @@ class Game(Frame):
         def __init__(self, parent):
                 # call the constructor in the superclass
                 Frame.__init__(self, parent)
+                # call the constructor in the superclass
+                Frame.__init__(self, parent)
+                self.button1 = Button(parent, text="North", fg="black", bg="lightgrey", font=helv36, command=self.north)
+                self.button1.pack(expand=1, fill=BOTH)
+                self.button3 = Button(parent, text="South", fg="black", bg="lightgrey", font=helv36, command=self.south)
+                self.button3.pack(side=BOTTOM, expand=1, fill=BOTH)
+                self.button2 = Button(parent, text="East", fg="black", bg="lightgrey", font=helv36, command=self.east)
+                self.button2.pack(side=RIGHT, expand=1, fill=BOTH)
+                self.button4 = Button(parent, text="West", fg="black", bg="lightgrey", font=helv36, command=self.west)
+                self.button4.pack(side=LEFT, expand=1, fill=BOTH)
+        def north(self):
+                Game.player_input.delete(0,END)
+                Game.player_input.insert(0,"go north")
+                self.process(None)
+                Game.player_input.delete(0, END)
 
+        def east(self):
+                Game.player_input.delete(0,END)
+                Game.player_input.insert(0,"go east")
+                self.process(None)
+                Game.player_input.delete(0, END)
+
+        def south(self):
+                Game.player_input.delete(0,END)
+                Game.player_input.insert(0,"go south")
+                self.process(None)
+                Game.player_input.delete(0, END)
+
+        def west(self):
+                Game.player_input.delete(0,END)
+                Game.player_input.insert(0,"go west")
+                self.process(None)
+                Game.player_input.delete(0, END)    
+
+
+
+
+
+
+                
         # creates the rooms
         def createRooms(self):
                 # r1 through r4 are the four rooms in the mansion
@@ -161,8 +205,7 @@ class Game(Frame):
         # sets up the GUI
         def setupGUI(self):
                 # organize the GUI
-                self.pack(fill=BOTH, expand=1)
-                
+                self.pack(ipadx=0, ipady=0, expand=1)
                 # setup the player input at the bottom of the GUI
                 # the widget is a Tkinter Entry
                 # set its background to white and bind the return key to the
@@ -311,8 +354,9 @@ HEIGHT = 600
 
 # create the window
 window = Tk()
+helv36 = tkFont.Font(family='Helvetica', size=36, weight=tkFont.BOLD)
 window.title("Room Adventure")
-
+window.configure(background = 'black')
 # create the GUI as a Tkinter canvas inside the window
 g = Game(window)
 # play the game
